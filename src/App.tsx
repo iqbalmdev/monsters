@@ -1,28 +1,35 @@
 import "./App.css";
-import CardComponent from "./Components/Card-list/card-list.Component.jsx";
-import SearchBox from "./Components/Search-box/search-box.component.jsx";
+import CardComponent from "./Components/Card-list/card-list.Component";
+import SearchBox from "./Components/Search-box/search-box.component";
 
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect,ChangeEvent } from "react";
+import { getData } from "./utils/data.utils";
+export type Montser = {
+id:number
+name:string;
+email:string
+}
 const App = () => {
   // State variables
-  const [monsters, setMonsters] = useState([]);
+  const [monsters, setMonsters] = useState<Montser[]>([]);
   const [searchStrings, setSearchStrings] = useState("");
   const [filteredData, setFilterData] = useState(monsters);
 
   // Fetch data from API
   console.log("rendered");
-  const fetchData = () => {
-    console.log(" ftech api");
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((monsters) => {
-        setMonsters(monsters);
-      });
+  const fetchData =async () => {
+    // console.log(" ftech api");
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    //   .then((response) => response.json())
+    //   .then((monsters) => {
+    //     setMonsters(monsters);
+    //   });
+    const res = await getData<Montser[]>("https://jsonplaceholder.typicode.com/users")
+    setMonsters(res)
   };
 
   // Handle search input change
-  const handleSearch = (event) => {
+  const handleSearch = (event:ChangeEvent<HTMLInputElement>):void => {
     const searchStrings = event.target.value.toLowerCase();
     setSearchStrings(searchStrings);
   };
@@ -43,7 +50,7 @@ const App = () => {
     console.log("filter effect");
   }, [monsters, searchStrings]);
   const [title, setTitle] = useState("");
-  const handleTitleChange = (event) => {
+  const handleTitleChange = (event:ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
   return (
@@ -54,9 +61,9 @@ const App = () => {
         <SearchBox
           className="monster-search-box"
           searchHandler={handleSearch}
-          placeholder="search-box"
+          placeholder="Search"
         />
-        <CardComponent monsters={filteredData} />
+        <CardComponent monster={filteredData} />
       </div>
     </>
   );

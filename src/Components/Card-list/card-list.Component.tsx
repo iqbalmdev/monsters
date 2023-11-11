@@ -26,25 +26,25 @@ import Card from "../Card/card.components";
 //   }
 // }
 // export default CardComponent;
-import React from "react";
+import React, { Fragment } from "react";
+import { Montser } from "../../App";
 
-const card = (props) => {
+type CardListProp  = {
+  monster:Montser[]
+}
+const card = ({monster}:CardListProp) => {
   return (
     <>
       <div className="card-list">
-        {props?.monsters?.map((data, idx) => {
+        {monster?.map((data) => {
           return (
-            <>
-              {/* <div key={id} className="card-container">
-               <img
-                 alt={`monster ${name}`}
-                 src={`https:robohash.org/${id}?set=set2&size=180x180`}
-               />
-               <h2>{name}</h2>
-               <p>{email}</p>
-             </div> */}
-              <Card key={data?.id} monsters={data} />
-            </>
+            
+            
+             <Fragment  key={data.id}>
+
+              <Card  monsters={data} />
+             </Fragment>
+            
           );
         })}
       </div>
