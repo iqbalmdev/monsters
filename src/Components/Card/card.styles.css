@@ -1,0 +1,11 @@
+.card-container {
+  width: 250px;
+  height: 350px;
+  background-color: #95dada;
+  transform: translateZ(0);
+  transition: transform 0.5s ease-out;
+  border-radius: 10px;
+}
+.card-container:hover {
+  transform: scale(1.05);
+}
